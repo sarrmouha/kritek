@@ -1,0 +1,16 @@
+<div class="container invoice_line" stimulus_controller('form-collection')>
+    <div class="row">
+        <div class="col">{{ form_row(line.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">{{ form_row(line.quantity, {'attr': {'class': 'form-control'}}) }}</div>
+        <div class="col">{{ form_row(line.amount, {'attr': {'class': 'form-control'}}) }}</div>
+        <div class="col">{{ form_row(line.vat, {'attr': {'class': 'form-control'}}) }}</div>
+        {% if delete %}
+        <div class="col">
+            <button {{ stimulus_action('form-collection', 'delete' ) }} type="button">
+            </button>
+        </div>
+        {% endif %}
+    </div>
+
+</div>

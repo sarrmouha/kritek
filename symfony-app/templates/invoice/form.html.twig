@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+<div class="form-group">
+    {{ form_row(form.number, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.customer, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.date, {'attr': {'class': 'form-control'}}) }}
+</div>
+{# the data-index attribute is required for the JavaScript code below #}
+{% set content = include('invoice/line_form.html.twig', {line: form.lines.vars.prototype, delete: false}) %}
+
+<div {{ stimulus_controller('form-collection') }}
+    data-form-collection-index-value="{{ form.lines|length > 0 ? form.lines|last.vars.name + 1 : 0 }}" {#
+    data-form-collection-prototype-value="{{ form_widget(form.lines.vars.prototype)|e('html_attr') }}" #}
+    data-form-collection-prototype-value="{{ content }}">
+    <ul {{ stimulus_target('form-collection', 'collectionContainer' ) }}></ul>
+    <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement' ) }}>Add a line</button>
+    {% for line in form.lines %}
+    {% include 'invoice/line_form.html.twig' with {line: line, delete: true} %}
+    {% endfor %}
+</div>
+<button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save Invoice')
+    }}</button>
+
+{{ form_end(form) }}

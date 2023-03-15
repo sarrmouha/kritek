@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invoice{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="text-center mt-5 mb-3">Show Invoice</h2>
+    <div class="card">
+        <div class="card-header">
+            <a class="btn btn-outline-info float-right" href="{{ path('invoice_index') }}">
+                View All Invoices
+            </a>
+        </div>
+        <div class="card-body">
+            <b class="text-muted">Number:</b>
+            <p>{{ invoice.number }}</p>
+            <b class="text-muted">Customer ID:</b>
+            <p>{{ invoice.customer }}</p>
+            <b class="text-muted">Date :</b>
+            <p>{{ invoice.date ? invoice.date|date('Y-m-d H:i:s') : '' }}</p>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Descrition</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>VAT</th>
+                    <th>Total</th>
+                </tr>
+                {% for line in invoice.lines %}
+                <tr>
+                    <td>{{ line.description }}</td>
+                    <td>{{ line.quantity }}</td>
+                    <td>{{ line.amount }}</td>
+                    <td>{{ line.vat }}</td>
+                    <td>{{ line.totalWithVat }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
